@@ -20,6 +20,8 @@ object GradeCalculator {
     fun isPassed(grade: BigDecimal): Boolean =
         roundToHalf(grade) >= PASSING_GRADE
 
+    // Sums the credit points of all passed modules
+    // Modules without a grade are not counted (null values)
     fun earnedCreditPoints(modules: List<ModuleResult>): Int =
         modules
             .filter { it.grade != null && isPassed(it.grade) }
