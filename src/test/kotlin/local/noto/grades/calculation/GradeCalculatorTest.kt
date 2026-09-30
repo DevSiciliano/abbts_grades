@@ -60,4 +60,22 @@ class GradeCalculatorTest {
 
         assertEquals(BigDecimal("4.0"), GradeCalculator.groupAverage(modules))
     }
+
+    @Test
+    fun `no modules earn zero credit points`() {
+        val modules = emptyList<ModuleResult>()
+
+        assertEquals(0, GradeCalculator.earnedCreditPoints(modules))
+    }
+
+    @Test
+    fun `3_75 rounds up to 4_0 and passes`() {
+        assertEquals(BigDecimal("4.0"), GradeCalculator.roundToHalf(BigDecimal("3.75")))
+    }
+
+    @Test
+    fun `3_74 rounds down to 3_5 and fails`() {
+        assertEquals(BigDecimal("3.5"), GradeCalculator.roundToHalf(BigDecimal("3.74")))
+    }
+
 }
