@@ -4,6 +4,7 @@ import java.math.BigDecimal
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
 class GradeCalculatorTest {
@@ -39,6 +40,22 @@ class GradeCalculatorTest {
             ModuleResult(BigDecimal("4.5"), 4),
             ModuleResult(BigDecimal("3.8"), 2),
             ModuleResult(null, 2) // Should be ignored because of null for grade
+        )
+
+        assertEquals(BigDecimal("4.0"), GradeCalculator.groupAverage(modules))
+    }
+
+    @Test
+    fun `group average is null when no module is graduaded`() {
+        val modules = listOf(ModuleResult(null, 4))
+        assertNull(GradeCalculator.groupAverage(modules))
+    }
+
+    @Test
+    fun `group average is rounded half up to one decimal`() {
+        val modules = listOf(
+            ModuleResult(BigDecimal("3.9"), 4),
+            ModuleResult(BigDecimal("4.0"), 4)
         )
 
         assertEquals(BigDecimal("4.0"), GradeCalculator.groupAverage(modules))
