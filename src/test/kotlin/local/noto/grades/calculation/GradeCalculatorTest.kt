@@ -19,4 +19,28 @@ class GradeCalculatorTest {
         assertEquals(BigDecimal("3.5"), GradeCalculator.roundToHalf(BigDecimal("3.7")))
         assertFalse(GradeCalculator.isPassed(BigDecimal("3.7")))
     }
+
+    @Test
+    fun `only passed modules earn credit points`() {
+        val modules = listOf(
+            ModuleResult(BigDecimal("3.7"), 4), // --> Not passed 0CP
+            ModuleResult(BigDecimal("4.5"), 4), // --> Passed 4CP
+            ModuleResult(BigDecimal("3.8"), 2),// --> Passed 2CP
+            ModuleResult(null, 2) // --> Ignored because no grade found
+        )
+
+        assertEquals(6, GradeCalculator.earnedCreditPoints(modules))
+    }
+
+    @Test
+    fun `group average is simple mean of graded modules`() {
+        val modules = listOf(
+            ModuleResult(BigDecimal("3.7"), 4),
+            ModuleResult(BigDecimal("4.5"), 4),
+            ModuleResult(BigDecimal("3.8"), 2),
+            ModuleResult(null, 2) // Should be ignored because of null for grade
+        )
+
+        assertEquals(BigDecimal("4.0"), GradeCalculator.groupAverage(modules))
+    }
 }
