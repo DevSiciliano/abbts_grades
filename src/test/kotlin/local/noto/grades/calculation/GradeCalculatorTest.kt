@@ -69,12 +69,12 @@ class GradeCalculatorTest {
     }
 
     @Test
-    fun `3_75 rounds up to 4_0 and passes`() {
+    fun `3_75 rounds up to 4_0`() {
         assertEquals(BigDecimal("4.0"), GradeCalculator.roundToHalf(BigDecimal("3.75")))
     }
 
     @Test
-    fun `3_74 rounds down to 3_5 and fails`() {
+    fun `3_74 rounds down to 3_5`() {
         assertEquals(BigDecimal("3.5"), GradeCalculator.roundToHalf(BigDecimal("3.74")))
     }
 
