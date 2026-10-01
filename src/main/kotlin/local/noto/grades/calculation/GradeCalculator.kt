@@ -6,7 +6,7 @@ import java.math.RoundingMode
 data class ModuleResult(val grade: BigDecimal?, val creditPoints: Int)
 
 object GradeCalculator {
-    private val PASSING_GRADE = BigDecimal("4.0")
+    internal val PASSING_GRADE = BigDecimal("4.0")
     private val TWO = BigDecimal(2)
 
     // Round grades to half values (e.g. 4.0, 4.5, 5.0)
@@ -16,7 +16,7 @@ object GradeCalculator {
             .divide(TWO)
             .setScale(1)
 
-    // Passed, if the rounded grade
+    // Passed, if the rounded grade is at least 4.0
     fun isPassed(grade: BigDecimal): Boolean =
         roundToHalf(grade) >= PASSING_GRADE
 
@@ -29,7 +29,7 @@ object GradeCalculator {
 
     fun groupAverage(modules: List<ModuleResult>): BigDecimal? {
         val grades = modules.mapNotNull { it.grade }
-        if(grades.isEmpty()) return null
+        if (grades.isEmpty()) return null
 
         return grades
             .sumOf { it }
